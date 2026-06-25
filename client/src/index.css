@@ -1,0 +1,311 @@
+@import "tailwindcss";
+
+@theme {
+  /* ============================================================
+   * SyncFinance — Premium Dark Theme Tokens
+   * Surfaces are layered from deepest (canvas) to most elevated
+   * (canvas-soft2). Text steps from ink (max contrast) → body →
+   * mute. Primary surfaces use `ink` (white) with dark text via
+   * `on-primary`. Avatars / colored chips use `on-accent`.
+   * ============================================================ */
+
+  /* Text tokens — hierarchical contrast */
+  --color-ink: #fafafa;            /* Primary text & primary-button surface */
+  --color-body: #c4c4cc;           /* Secondary text */
+  --color-mute: #8a8a93;           /* Tertiary text & icons */
+
+  /* Surface tokens — layered backgrounds.
+   *   Existing components use:
+   *     bg-canvas-soft → page / main workspace background
+   *     bg-canvas      → cards, sidebar, topbar (one step elevated)
+   *     bg-canvas-soft2 → selected / hover / "elevated" states
+   *   We tune values so cards visibly LIFT off the page in dark mode. */
+  --color-canvas: #16161b;         /* Card / chrome surface (mid tone) */
+  --color-canvas-soft: #0a0a0c;    /* App background (darkest) */
+  --color-canvas-soft2: #1f1f26;   /* Elevated / hover / active */
+  --color-canvas-soft3: #2a2a32;   /* Strongly elevated / pressed */
+
+  /* Borders */
+  --color-hairline: #2a2a31;       /* Default border */
+  --color-hairline-strong: #3a3a44;/* Hover / focused border */
+
+  /* "On" colors — text colors that live on top of specific surfaces */
+  --color-on-primary: #0a0a0c;     /* Text on `ink` (white) primary buttons */
+  --color-on-accent: #ffffff;      /* Text on vibrant colored chips/avatars */
+
+  /* Overlay — for modal backdrops */
+  --color-overlay: rgba(5, 5, 8, 0.72);
+
+  /* Accents — vibrant on dark */
+  --color-link: #60a5fa;
+  --color-link-deep: #93c5fd;
+  --color-link-bg-soft: rgba(96, 165, 250, 0.16);
+
+  --color-success: #34d399;
+  --color-success-soft: rgba(52, 211, 153, 0.14);
+  --color-success-deep: #6ee7b7;
+
+  --color-error: #f87171;
+  --color-error-soft: rgba(248, 113, 113, 0.14);
+  --color-error-deep: #fca5a5;
+
+  --color-warning: #fbbf24;
+  --color-warning-soft: rgba(251, 191, 36, 0.14);
+  --color-warning-deep: #fcd34d;
+
+  --color-violet: #a78bfa;
+  --color-violet-soft: rgba(167, 139, 250, 0.14);
+  --color-violet-deep: #c4b5fd;
+
+  --color-cyan: #22d3ee;
+  --color-cyan-soft: rgba(34, 211, 238, 0.14);
+  --color-cyan-deep: #67e8f9;
+
+  --color-highlight-pink: #f472b6;
+  --color-highlight-magenta: #e879f9;
+
+  /* Gradient stops */
+  --color-gd-develop-start: #60a5fa;
+  --color-gd-develop-end: #22d3ee;
+  --color-gd-preview-start: #a78bfa;
+  --color-gd-preview-end: #f472b6;
+  --color-gd-ship-start: #f87171;
+  --color-gd-ship-end: #fbbf24;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+}
+
+/* ============================================================
+ * Selection & global typography
+ * ============================================================ */
+::selection {
+  background-color: rgba(167, 139, 250, 0.35);
+  color: #fafafa;
+}
+
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--color-canvas);
+  background-image:
+    radial-gradient(circle at 12% -10%, rgba(96, 165, 250, 0.08), transparent 45%),
+    radial-gradient(circle at 88% 110%, rgba(167, 139, 250, 0.08), transparent 45%);
+  background-attachment: fixed;
+}
+
+/* Make native form controls inherit dark mode */
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+  color: inherit;
+}
+
+/* Browser-rendered native widgets (select dropdown list, date popovers, etc.) */
+select option {
+  background-color: var(--color-canvas-soft);
+  color: var(--color-ink);
+}
+
+/* Autofill — keep dark backgrounds */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: var(--color-ink);
+  -webkit-box-shadow: 0 0 0px 1000px var(--color-canvas) inset;
+  caret-color: var(--color-ink);
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Placeholder polish */
+::placeholder {
+  color: var(--color-mute);
+  opacity: 1;
+}
+
+/* ============================================================
+ * Scrollbars — sleek dark
+ * ============================================================ */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.18);
+  background-clip: content-box;
+  border: 2px solid transparent;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+}
+
+/* ============================================================
+ * Glass / elevation utilities
+ * ============================================================ */
+.glass-panel {
+  background: rgba(18, 18, 21, 0.72);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.03) inset,
+    0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+.glass-panel-hover {
+  transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glass-panel-hover:hover {
+  background: rgba(28, 28, 33, 0.85);
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.05) inset,
+    0 16px 40px rgba(0, 0, 0, 0.55);
+}
+
+/* Card elevation specifically tuned for dark surfaces.
+   Cheap shadows like #0000000a are invisible against #0a0a0c — these
+   layered shadows lift cards convincingly without looking heavy. */
+.elev-card {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.02) inset,
+    0 1px 2px rgba(0, 0, 0, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.35);
+}
+.elev-card-hover {
+  transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.2s ease,
+              transform 0.2s ease;
+}
+.elev-card-hover:hover {
+  border-color: var(--color-hairline-strong);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 1px 2px rgba(0, 0, 0, 0.5),
+    0 8px 28px rgba(0, 0, 0, 0.55);
+}
+.elev-popover {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 8px 16px rgba(0, 0, 0, 0.5),
+    0 24px 48px rgba(0, 0, 0, 0.65);
+}
+.elev-modal {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 24px 48px rgba(0, 0, 0, 0.6),
+    0 48px 96px rgba(0, 0, 0, 0.7);
+}
+
+/* ============================================================
+ * Animations
+ * ============================================================ */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.3; transform: scale(0.8); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes gradient-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-fadeIn   { animation: fadeIn   0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+.animate-slideIn  { animation: slideIn  0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+.animate-slideUp  { animation: slideUp  0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+.animate-pulse-dot { animation: pulse-dot 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+.animate-gradient { animation: gradient-shift 8s ease infinite; background-size: 300% 300%; }
+
+/* ============================================================
+ * Form & button polish
+ * ============================================================ */
+button {
+  transition: background-color 0.2s ease,
+              border-color 0.2s ease,
+              color 0.2s ease,
+              opacity 0.2s ease,
+              transform 0.12s ease;
+}
+button:not(:disabled):active {
+  transform: scale(0.98);
+}
+
+input,
+textarea,
+select {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-link);
+  box-shadow: 0 0 0 3px var(--color-link-bg-soft);
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Accessible focus ring for non-input interactives */
+:focus-visible {
+  outline: none;
+}
+a:focus-visible,
+button:focus-visible {
+  box-shadow: 0 0 0 3px var(--color-link-bg-soft);
+  border-radius: 6px;
+}
+
+/* Native checkbox / radio polish */
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: var(--color-link);
+}
